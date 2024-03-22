@@ -90,13 +90,19 @@ func NewMySQLStoreFromConnection(db *sql.DB, tableName string, path string, maxA
 		return nil, stmtErr
 	}
 
+	var codecs [1]securecookie.Codec
+	cookieCodec := securecookie.New(securecookie.GenerateRandomKey(64), securecookie.GenerateRandomKey(32))
+	cookieCodec.MaxLength(4096 * 4)
+	codecs[0] = cookieCodec
+
 	return &MySQLStore{
 		db:         db,
 		stmtInsert: stmtInsert,
 		stmtDelete: stmtDelete,
 		stmtUpdate: stmtUpdate,
 		stmtSelect: stmtSelect,
-		Codecs:     securecookie.CodecsFromPairs(keyPairs...),
+		Codecs:     codecs[:],
+		//Codecs:     securecookie.CodecsFromPairs(keyPairs...),
 		Options: &sessions.Options{
 			Path:   path,
 			MaxAge: maxAge,
