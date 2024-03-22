@@ -1,5 +1,8 @@
 # gin-sessions
 
+Basically this repository is a rewrite of the [gorilla/sessions](https://github.com/gorilla/sessions) package
+to work with the [gin-gonic/gin](https://github.com/gin-gonic/gin) framework.
+
 # <span style="color:red">WARNING</span>
 This repository contains code from 
 
